@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="1200.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enigmaaa.StockController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <AnchorPane prefHeight="700.0" prefWidth="1200.0">
+        <children>
+
+            <Label fx:id="title" layoutX="412.0" layoutY="42.0" text="Welcome to our stock list" textFill="#009a31">
+                <font>
+                    <Font name="Arial Black" size="24.0" />
+                </font>
+            </Label>
+            <TableView fx:id="stockTable" layoutX="309.0" layoutY="160.0" prefHeight="341.0" prefWidth="771.0">
+                <columns>
+                    <TableColumn fx:id="nomp" prefWidth="203.0" text="Nom du produit " />
+                    <TableColumn fx:id="quantitep" minWidth="6.0" prefWidth="198.0" text="Quantité" />
+                    <TableColumn fx:id="datep" prefWidth="199.0" text="Dernière date d'ajout" />
+                    <TableColumn fx:id="type" prefWidth="173.0" text="Type de produit" />
+                </columns>
+            </TableView>
+            <Button fx:id="edit" layoutX="59.0" layoutY="308.0" prefHeight="44.0" prefWidth="134.0" text="Edit" textFill="#f27500">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Button>
+            <Button fx:id="delete" layoutX="59.0" layoutY="409.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="134.0" text="Delete" textFill="#f27500">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Button>
+            <Button fx:id="add" layoutX="59.0" layoutY="200.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="134.0" text="Add" textFill="#f27500">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Button>
+        </children>
+    </AnchorPane>
+</VBox>
