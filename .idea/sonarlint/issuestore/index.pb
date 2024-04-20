@@ -29,3 +29,5 @@ W
 'src/main/java/Interfaces/StockList.fxml,f\0\f0568744c7412ca6c03b4c9c55b086908d996f6d
 8
 mvnw.cmd,1\f\1f1763f358c257ea3515417352b82b0165647ad1
+U
+%src/main/java/models/TypeProduit.java,b\f\bfb4a29710d7cb2a33de8da6842a85e85876b156

@@ -5,45 +5,76 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="700.0" prefWidth="1200.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enigmaaa.StockController">
+<VBox alignment="CENTER" prefHeight="726.0" prefWidth="1235.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enigmaaa.StockController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <AnchorPane prefHeight="700.0" prefWidth="1200.0">
+    <AnchorPane prefHeight="409.0" prefWidth="1160.0">
         <children>
 
-            <Label fx:id="title" layoutX="412.0" layoutY="42.0" text="Welcome to our stock list" textFill="#009a31">
+            <Label fx:id="title" layoutX="-1.0" layoutY="-4.0" text="ENIGMA" textFill="#007c57">
                 <font>
                     <Font name="Arial Black" size="24.0" />
                 </font>
             </Label>
-            <TableView fx:id="stockTable" layoutX="309.0" layoutY="160.0" prefHeight="341.0" prefWidth="771.0">
+            <TableView fx:id="stockTable" layoutX="291.0" layoutY="25.0" prefHeight="341.0" prefWidth="889.0">
                 <columns>
-                    <TableColumn fx:id="nomp" prefWidth="203.0" text="Nom du produit " />
-                    <TableColumn fx:id="quantitep" minWidth="6.0" prefWidth="198.0" text="Quantité" />
-                    <TableColumn fx:id="datep" prefWidth="199.0" text="Dernière date d'ajout" />
-                    <TableColumn fx:id="type" prefWidth="173.0" text="Type de produit" />
+                    <TableColumn fx:id="nomp" prefWidth="234.0" text="Nom du produit " />
+                    <TableColumn fx:id="quantitep" minWidth="6.0" prefWidth="156.0" text="Quantité" />
+                    <TableColumn fx:id="datep" prefWidth="155.0" text="Dernière date d'ajout" />
+                    <TableColumn fx:id="type" prefWidth="171.0" text="Type de produit" />
+                   <TableColumn fx:id="prixx" prefWidth="173.0" text="Prix unité" />
                 </columns>
             </TableView>
-            <Button fx:id="edit" layoutX="59.0" layoutY="308.0" prefHeight="44.0" prefWidth="134.0" text="Edit" textFill="#f27500">
-                <font>
-                    <Font name="System Bold" size="24.0" />
-                </font>
-            </Button>
-            <Button fx:id="delete" layoutX="59.0" layoutY="409.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="134.0" text="Delete" textFill="#f27500">
-                <font>
-                    <Font name="System Bold" size="24.0" />
-                </font>
-            </Button>
-            <Button fx:id="add" layoutX="59.0" layoutY="200.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="134.0" text="Add" textFill="#f27500">
+            <Button fx:id="btnDelete" layoutX="71.0" layoutY="284.0" mnemonicParsing="false" onAction="#delete" prefHeight="51.0" prefWidth="134.0" text="Delete" textFill="#f27500">
                 <font>
                     <Font name="System Bold" size="24.0" />
                 </font>
             </Button>
         </children>
     </AnchorPane>
+   <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="700.0" style="-fx-background-color: dadada;">
+      <children>
+         <Label layoutX="66.0" layoutY="83.0" text="Nom du produit :" textFill="#007c57">
+            <font>
+               <Font name="Arial Bold" size="15.0" />
+            </font>
+         </Label>
+         <Label layoutX="72.0" layoutY="187.0" text="Quantité : " textFill="#007c57">
+            <font>
+               <Font name="Arial Bold" size="15.0" />
+            </font>
+         </Label>
+         <Label layoutX="419.0" layoutY="83.0" text="Type de produit :" textFill="#007c57">
+            <font>
+               <Font name="Arial Bold" size="15.0" />
+            </font>
+         </Label>
+         <TextField fx:id="tnom" layoutX="199.0" layoutY="71.0" prefHeight="37.0" prefWidth="170.0" />
+         <TextField fx:id="tquan" layoutX="199.0" layoutY="177.0" prefHeight="37.0" prefWidth="170.0" />
+         <TextField fx:id="ttype" layoutX="557.0" layoutY="74.0" prefHeight="37.0" prefWidth="170.0" />
+         <TextField fx:id="tprix" layoutX="557.0" layoutY="177.0" prefHeight="37.0" prefWidth="170.0" />
+         <Label layoutX="424.0" layoutY="187.0" text="Prix unité :" textFill="#007c57">
+            <font>
+               <Font name="Arial Bold" size="15.0" />
+            </font>
+         </Label>
+            <Button fx:id="btnAdd" layoutX="895.0" layoutY="81.0" mnemonicParsing="false" onAction="#add" prefHeight="51.0" prefWidth="134.0" text="Add" textFill="#f27500">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Button>
+            <Button fx:id="btnUpdate" layoutX="895.0" layoutY="168.0" onAction="#update" prefHeight="44.0" prefWidth="134.0" text="Update" textFill="#f27500">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Button>
+      </children>
+   </Pane>
 </VBox>

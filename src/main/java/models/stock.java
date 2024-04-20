@@ -6,16 +6,18 @@ public class stock {
 
     private int id, quantite;
     private String nom_produit,type;
-
+    private Float prix ;
+    private Date date;
     public stock() {
 
     }
 
-    public stock( String nom_produit,int quantite , Date date, String type) {
+    public stock( String nom_produit,int quantite , Date date, String type, Float prix) {
         this.quantite = quantite;
         this.nom_produit = nom_produit;
         this.type = type;
         this.date = date;
+        this.prix = prix ;
     }
 
     public stock(int id, int quantite, String nom_produit, String type, Date date) {
@@ -26,7 +28,7 @@ public class stock {
         this.date = date;
     }
 
-    public stock(int quantite, String nom_produit, String type) {
+    public stock(int quantite, String nom_produit, String type , Float prix) {
         this.quantite= quantite;
         this.nom_produit = nom_produit;
         this.type = type;
@@ -74,10 +76,13 @@ public class stock {
         this.date = date;
     }
 
-    private Date date;
+    public Float getPrix() {
+        return prix;
+    }
 
-
-
+    public void setPrix(Float prix) {
+        this.prix = prix;
+    }
 
     @Override
     public String toString() {
@@ -86,7 +91,8 @@ public class stock {
                 ", quantite=" + quantite +
                 ", nom_produit='" + nom_produit + '\'' +
                 ", type='" + type + '\'' +
-                ", date=" + date +
+                ", date=" + date + '\'' +
+                ", prix=" + prix +
                 '}';
     }
 
