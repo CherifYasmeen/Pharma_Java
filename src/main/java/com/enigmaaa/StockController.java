@@ -3,6 +3,8 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.stock;
@@ -11,6 +13,8 @@ import javafx.event.ActionEvent;
 
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StockController {
 
@@ -152,10 +156,83 @@ public class StockController {
     }
 
 
+
+    @FXML
+    public void table() {
+        Connection connection = MyDatabase.getInstance().getConnection();
+
+        ObservableList<stock> stocks = FXCollections.observableArrayList();
+        try {
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock`");
+            while (resultSet.next()) {
+                stock s = new stock(
+                        resultSet.getString("nom_produit"),
+                        resultSet.getInt("quantite"),
+                        resultSet.getDate("date"),
+                        resultSet.getString("type"),
+                        resultSet.getFloat("prix"));
+                stocks.add(s);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        stockTable.setItems(stocks);
+    }
+
     @FXML
     void delete(ActionEvent event) {
+        stock selectedItem = stockTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            try {
+                Connection connection = MyDatabase.getInstance().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM stock WHERE nom_produit = ?");
+                preparedStatement.setString(1, selectedItem.getNom_produit());
 
+                int affectedRows = preparedStatement.executeUpdate();
+                if (affectedRows > 0) {
+                    System.out.println("Record deleted successfully!");
+                    // Show success message
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Delete Product");
+                    alert.setHeaderText("Delete Product");
+                    alert.setContentText("Product deleted successfully!");
+                    alert.showAndWait();
+
+                    // Refresh table view
+                    stockTable.getItems().remove(selectedItem);
+                } else {
+                    System.out.println("Failed to delete record!");
+                    // Show error message
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Delete Product");
+                    alert.setHeaderText("Delete Product");
+                    alert.setContentText("Failed to delete product!");
+                    alert.showAndWait();
+                }
+
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Show error message
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Delete Product");
+                alert.setHeaderText("Delete Product");
+                alert.setContentText("An error occurred while deleting product!");
+                alert.showAndWait();
+            }
+        } else {
+            // Show error message if no item is selected
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Delete Product");
+            alert.setHeaderText("Delete Product");
+            alert.setContentText("Please select a product to delete!");
+            alert.showAndWait();
+        }
     }
+
 
     @FXML
     void update(ActionEvent event) {

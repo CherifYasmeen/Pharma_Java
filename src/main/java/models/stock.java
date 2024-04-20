@@ -11,6 +11,14 @@ public class stock {
     public stock() {
 
     }
+    public stock(int id , String nom_produit,int quantite , Date date, String type, Float prix) {
+        this.id = id;
+        this.quantite = quantite;
+        this.nom_produit = nom_produit;
+        this.type = type;
+        this.date = date;
+        this.prix = prix ;
+    }
 
     public stock( String nom_produit,int quantite , Date date, String type, Float prix) {
         this.quantite = quantite;
@@ -20,19 +28,7 @@ public class stock {
         this.prix = prix ;
     }
 
-    public stock(int id, int quantite, String nom_produit, String type, Date date) {
-        this.id = id;
-        this.quantite = quantite;
-        this.nom_produit = nom_produit;
-        this.type = type;
-        this.date = date;
-    }
 
-    public stock(int quantite, String nom_produit, String type , Float prix) {
-        this.quantite= quantite;
-        this.nom_produit = nom_produit;
-        this.type = type;
-    }
 
 
     public int getId() {
