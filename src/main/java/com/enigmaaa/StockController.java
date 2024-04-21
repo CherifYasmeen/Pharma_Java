@@ -6,12 +6,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import models.stock;
 import utils.MyDatabase;
 import javafx.event.ActionEvent;
 
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +40,9 @@ public class StockController {
 
     @FXML
     private TableColumn<stock, Float> prixx;
+
+    @FXML
+    private Button retour;
 
     @FXML
     private Button btnAdd;
@@ -90,6 +98,8 @@ public class StockController {
         });
 
         table();
+
+        retour.setOnAction(event -> loadScene("Home.fxml"));
     }
 
     private void initializeColumns() {
@@ -475,11 +485,27 @@ public class StockController {
         tquan.clear();
         ttype.clear();
         tprix.clear();
+        nomChoice.clear();
+
 
         stockTable.getItems().clear();
         afficherStocks();
     }
 
+
+
+    private void loadScene(String fxmlFileName) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlFileName));
+            Stage stage = (Stage) retour.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 }
