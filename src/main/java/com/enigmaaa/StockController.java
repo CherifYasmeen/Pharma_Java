@@ -475,7 +475,11 @@ public class StockController {
         tquan.clear();
         ttype.clear();
         tprix.clear();
+
+        stockTable.getItems().clear();
+        afficherStocks();
     }
+
 
 
 }

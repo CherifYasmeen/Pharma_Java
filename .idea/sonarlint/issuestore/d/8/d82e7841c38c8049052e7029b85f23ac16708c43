@@ -7,26 +7,26 @@ h
 java:S1192n"LDefine a constant instead of duplicating this literal "nom_produit" 4 times.(ŠÉR8†¾Ç‚ğ1
 ¥
 java:S1192k"‡Define a constant instead of duplicating this literal "SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock`" 3 times.(‹ÒîÛ8³ß•ƒğ1
-m
-java:S2095“"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8Á¾Ç‚ğ1
+r
+java:S2095Á"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(•ñé¡ûÿÿÿÿ8öß•ƒğ1
+r
+java:S2095Ã"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(™µöäüÿÿÿÿ8öß•ƒğ1
+j
+java:S2095¬"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8’Ô…ƒğ1
 r
 java:S2095¬"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ûˆ•†şÿÿÿÿ8Æòê‚ğ1
 m
 java:S2095½"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÿºÆ…8Æòê‚ğ1
-l
-java:S2095â"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(—Éç?8§á‚ğ1
 r
 java:S2095"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÛÏÿøÿÿÿÿ8Á¾Ç‚ğ1
-r
-java:S2095Ã"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(™µöäüÿÿÿÿ8öß•ƒğ1
-j
-java:S2095ç"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Á¾Ç‚ğ1
-r
-java:S2095Á"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(•ñé¡ûÿÿÿÿ8öß•ƒğ1
 i
 java:S2095j"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8öß•ƒğ1
 j
-java:S2095¬"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8’Ô…ƒğ1
+java:S2095ç"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Á¾Ç‚ğ1
+l
+java:S2095â"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(—Éç?8§á‚ğ1
+m
+java:S2095“"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8Á¾Ç‚ğ1
 N
 java:S1602L",Remove useless curly braces around statement(¨ÈíÁùÿÿÿÿ8·ª”ƒğ1
 L	java:S106t"+Replace this use of System.out by a logger.(Å­Ëİúÿÿÿÿ8Ë¾Ç‚ğ1
