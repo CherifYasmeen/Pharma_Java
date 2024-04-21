@@ -57,12 +57,24 @@ public class StockController {
     @FXML
     private TextField ttype;
 
+    @FXML
+    private ChoiceBox<String> typeChoice;
+
+    @FXML
+    private TextField nomChoice;
+
 
 
     @FXML
     public void initialize() {
         initializeColumns();
         afficherStocks();
+
+        nomChoice.textProperty().addListener((observable, oldValue, newValue) -> {
+            rechercher(newValue);
+        });
+
+        table();
     }
 
     private void initializeColumns() {
@@ -328,6 +340,29 @@ public class StockController {
             alert.setContentText("Please select a product to update!");
             alert.showAndWait();
         }
+    }
+
+    void rechercher(String nomProduit) {
+        ObservableList<stock> stocks = FXCollections.observableArrayList();
+        try {
+            Connection connection = MyDatabase.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock` WHERE `nom_produit` LIKE ?");
+            preparedStatement.setString(1, "%" + nomProduit + "%"); // Using LIKE operator
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                stock s = new stock(
+                        resultSet.getString("nom_produit"),
+                        resultSet.getInt("quantite"),
+                        resultSet.getDate("date"),
+                        resultSet.getString("type"),
+                        resultSet.getFloat("prix"));
+                stocks.add(s);
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        stockTable.setItems(stocks);
     }
 
 

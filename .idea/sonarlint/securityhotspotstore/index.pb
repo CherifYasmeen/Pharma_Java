@@ -1,33 +1,15 @@
 
-`
-0src/main/java/java/enigmaaa/HelloController.java,f\f\ff4d6d81202e96afca3bb52e44935e3a081a1744
-a
-1src/main/java/java/enigmaaa/HelloApplication.java,3\c\3ca311d500ca219f0d00a18d350d76a51690ef73
-`
-0src/main/resources/java/enigmaaa/hello-view.fxml,b\a\bad233585a7e991f74747c494f6581e2af5c824b
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 N
 src/main/java/module-info.java,1\c\1c89a5491fbfda3fb050196d6a239f20200296e7
-`
-0src/main/java/com/enigmaaa/HelloApplication.java,0\7\07568c1a92a21bdfca57e8566b3d161cf50d7a6d
 T
 $src/main/java/com/enigmaaa/Main.java,b\3\b3912425e4d41adb5badb607cdbc7a04cffebfec
-_
-/src/main/java/com/enigmaaa/HelloController.java,7\5\75c28b986601c95fe4d29d3c2d092abc61f0d6d8
 S
 #src/main/java/utils/MyDatabase.java,2\c\2c0fa17c97a842e24383be9651feff6cc8e13ef2
 O
 src/main/java/models/stock.java,5\e\5e5ec3bf45aa6d5c92b09b6bedd15045e319e70a
-X
-(src/main/java/Interfaces/hello-view.fxml,d\b\db0a48b0922547633bdd6c32bda494808649c101
 _
 /src/main/java/com/enigmaaa/StockController.java,d\8\d82e7841c38c8049052e7029b85f23ac16708c43
-X
-(src/main/java/Interfaces/List-stock.fxml,9\f\9ff89eb2c2b450b666ddf93642454c3179b28908
-W
-'src/main/java/Interfaces/StockList.fxml,f\0\f0568744c7412ca6c03b4c9c55b086908d996f6d
 8
 mvnw.cmd,1\f\1f1763f358c257ea3515417352b82b0165647ad1
-U
-%src/main/java/models/TypeProduit.java,b\f\bfb4a29710d7cb2a33de8da6842a85e85876b156

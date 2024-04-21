@@ -1,24 +1,32 @@
 
 r
-java:S1192Ù"ODefine a constant instead of duplicating this literal "Delete Product" 8 times.(ÎÄ³êùÿÿÿÿ8Ëïï1
-n
-java:S1192z"LDefine a constant instead of duplicating this literal "Add Product" 6 times.(³·‚Ìùÿÿÿÿ8Ëïï1
+java:S1192å"ODefine a constant instead of duplicating this literal "Delete Product" 8 times.(ÎÄ³êùÿÿÿÿ8²É²ğ1
+o
+java:S1192†"LDefine a constant instead of duplicating this literal "Add Product" 6 times.(³·‚Ìùÿÿÿÿ8²É²ğ1
+e
+java:S1192`"IDefine a constant instead of duplicating this literal "quantite" 3 times.(ü†¿a8²É²ğ1
+h
+java:S1192_"LDefine a constant instead of duplicating this literal "nom_produit" 3 times.(ŠÉR8³É²ğ1
 r
-java:S1192 "ODefine a constant instead of duplicating this literal "Update Product" 8 times.(¸¬‡ùÿÿÿÿ8³îïï1
+java:S1192¬"ODefine a constant instead of duplicating this literal "Update Product" 8 times.(¸¬‡ùÿÿÿÿ8³É²ğ1
+l
+java:S2095"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(—Éç?8¢Ê²ğ1
+r
+java:S2095İ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÛÏÿøÿÿÿÿ8¡Ê²ğ1
+l
+java:S2095z"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÿºÆ…8¡Ê²ğ1
 j
-java:S2095¥"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8â ±ïï1
-l
-java:S2095‘"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(—Éç?8µ³îïï1
-i
-java:S2095O"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8ôöâïï1
-l
-java:S2095n"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÿºÆ…8â ±ïï1
+java:S2095±"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8¡Ê²ğ1
 m
-java:S2095Ñ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8â ±ïï1
-L	java:S106Y"+Replace this use of System.out by a logger.(Å­Ëİúÿÿÿÿ8ê ±ïï1
-L	java:S106w"+Replace this use of System.out by a logger.(‡ºìƒøÿÿÿÿ8ì ±ïï1
-M	java:S106‰"+Replace this use of System.out by a logger.(Õñ´øúÿÿÿÿ8ï ±ïï1
-M	java:S106Ö"+Replace this use of System.out by a logger.(´¶¢áüÿÿÿÿ8ò ±ïï1
-H	java:S106á"+Replace this use of System.out by a logger.(¿à†Ÿ8ó ±ïï1
-M	java:S106"+Replace this use of System.out by a logger.(î¡Úÿÿÿÿÿ8È³îïï1
-M	java:S106¯"+Replace this use of System.out by a logger.(Ô„ŠÅÿÿÿÿÿ8É³îïï1
+java:S2095İ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8¡Ê²ğ1
+i
+java:S2095["GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8¡Ê²ğ1
+N
+java:S1602I",Remove useless curly braces around statement(¨ÈíÁùÿÿÿÿ8©Ê²ğ1
+L	java:S106e"+Replace this use of System.out by a logger.(Å­Ëİúÿÿÿÿ8µÊ²ğ1
+M	java:S106ƒ"+Replace this use of System.out by a logger.(‡ºìƒøÿÿÿÿ8¾Ê²ğ1
+M	java:S106•"+Replace this use of System.out by a logger.(Õñ´øúÿÿÿÿ8ÃÊ²ğ1
+M	java:S106â"+Replace this use of System.out by a logger.(´¶¢áüÿÿÿÿ8ÔÊ²ğ1
+H	java:S106í"+Replace this use of System.out by a logger.(¿à†Ÿ8×Ê²ğ1
+M	java:S106©"+Replace this use of System.out by a logger.(î¡Úÿÿÿÿÿ8äÊ²ğ1
+M	java:S106»"+Replace this use of System.out by a logger.(Ô„ŠÅÿÿÿÿÿ8çÊ²ğ1
