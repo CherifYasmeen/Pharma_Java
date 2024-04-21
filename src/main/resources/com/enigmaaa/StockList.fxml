@@ -38,45 +38,50 @@
 
             <ChoiceBox fx:id="typeChoice" layoutX="457.0" prefHeight="37.0" prefWidth="211.0" style="-fx-background-color: white; -fx-border-color: #22577a;" />
          <ImageView fx:id="imagee" fitHeight="238.0" fitWidth="242.0" layoutX="53.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" />
+         <Button fx:id="refr" layoutX="1218.0" layoutY="1.0" mnemonicParsing="false" onAction="#refresh" prefHeight="37.0" prefWidth="61.0" style="-fx-background-color: cccccc; -fx-border-color: a5a5a5;" text="Ref" textFill="#22577a">
+            <font>
+               <Font name="Calibri Bold" size="18.0" />
+            </font>
+         </Button>
         </children>
     </AnchorPane>
    <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="710.0" style="-fx-background-color: ebebeb;">
       <children>
-         <Label layoutX="69.0" layoutY="82.0" text="Nom du produit :" textFill="#22577a">
+         <Label layoutX="49.0" layoutY="80.0" text="Nom du produit :" textFill="#22577a">
             <font>
                <Font name="Calibri Bold" size="17.0" />
             </font>
          </Label>
-         <Label layoutX="75.0" layoutY="186.0" text="Quantité : " textFill="#22577a">
+         <Label layoutX="531.0" layoutY="79.0" text="Quantité : " textFill="#22577a">
             <font>
                <Font name="Calibri Bold" size="17.0" />
             </font>
          </Label>
-         <Label layoutX="467.0" layoutY="82.0" text="Type de produit :" textFill="#22577a">
+         <Label layoutX="49.0" layoutY="184.0" text="Type de produit :" textFill="#22577a">
             <font>
                <Font name="Calibri Bold" size="17.0" />
             </font>
          </Label>
-         <TextField fx:id="tnom" layoutX="219.0" layoutY="73.0" prefHeight="37.0" prefWidth="170.0" style="-fx-border-color: #22577a;" />
-         <TextField fx:id="tquan" layoutX="219.0" layoutY="179.0" prefHeight="37.0" prefWidth="170.0" style="-fx-border-color: #22577a;" />
-         <TextField fx:id="ttype" layoutX="622.0" layoutY="76.0" prefHeight="37.0" prefWidth="170.0" style="-fx-border-color: #22577a;" />
-         <TextField fx:id="tprix" layoutX="622.0" layoutY="179.0" prefHeight="37.0" prefWidth="170.0" style="-fx-border-color: #22577a;" />
-         <Label layoutX="472.0" layoutY="186.0" text="Prix unité :" textFill="#22577a">
+         <TextField fx:id="tnom" layoutX="206.0" layoutY="71.0" prefHeight="37.0" prefWidth="227.0" style="-fx-border-color: #22577a;" />
+         <TextField fx:id="tquan" layoutX="681.0" layoutY="72.0" prefHeight="37.0" prefWidth="199.0" style="-fx-border-color: #22577a;" />
+         <TextField fx:id="ttype" layoutX="206.0" layoutY="178.0" prefHeight="37.0" prefWidth="227.0" style="-fx-border-color: #22577a;" />
+         <TextField fx:id="tprix" layoutX="681.0" layoutY="178.0" prefHeight="37.0" prefWidth="199.0" style="-fx-border-color: #22577a;" />
+         <Label layoutX="530.0" layoutY="186.0" text="Prix unité :" textFill="#22577a">
             <font>
                <Font name="Calibri Bold" size="17.0" />
             </font>
          </Label>
-            <Button fx:id="btnDelete" layoutX="947.0" layoutY="211.0" mnemonicParsing="false" onAction="#delete" prefHeight="51.0" prefWidth="134.0" style="-fx-background-color: cccccc; -fx-border-color: a5a5a5;" text="Delete" textFill="#22577a">
+            <Button fx:id="btnDelete" layoutX="1016.0" layoutY="211.0" mnemonicParsing="false" onAction="#delete" prefHeight="51.0" prefWidth="134.0" style="-fx-background-color: cccccc; -fx-border-color: a5a5a5;" text="Delete" textFill="#22577a">
                 <font>
                     <Font name="Calibri Bold" size="24.0" />
                 </font>
             </Button>
-            <Button fx:id="btnAdd" layoutX="947.0" layoutY="38.0" mnemonicParsing="false" onAction="#add" prefHeight="51.0" prefWidth="134.0" style="-fx-background-color: cccccc; -fx-border-color: a5a5a5;" text="Add" textFill="#22577a">
+            <Button fx:id="btnAdd" layoutX="1016.0" layoutY="38.0" mnemonicParsing="false" onAction="#add" prefHeight="51.0" prefWidth="134.0" style="-fx-background-color: cccccc; -fx-border-color: a5a5a5;" text="Add" textFill="#22577a">
                 <font>
                     <Font name="Calibri Bold" size="24.0" />
                 </font>
             </Button>
-            <Button fx:id="btnUpdate" layoutX="947.0" layoutY="125.0" onAction="#update" prefHeight="51.0" prefWidth="134.0" style="-fx-background-color: cccccc; -fx-border-color: a5a5a5;" text="Update" textFill="#22577a">
+            <Button fx:id="btnUpdate" layoutX="1016.0" layoutY="125.0" onAction="#update" prefHeight="51.0" prefWidth="134.0" style="-fx-background-color: cccccc; -fx-border-color: a5a5a5;" text="Update" textFill="#22577a">
                 <font>
                     <Font name="Calibri Bold" size="24.0" />
                 </font>

@@ -63,6 +63,9 @@ public class StockController {
     @FXML
     private TextField nomChoice;
 
+    @FXML
+    private Button refr;
+
 
 
     @FXML
@@ -72,6 +75,18 @@ public class StockController {
 
         nomChoice.textProperty().addListener((observable, oldValue, newValue) -> {
             rechercher(newValue);
+        });
+
+        populateTypeChoice(); // Populate the ChoiceBox with available types
+
+        typeChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                if (newValue.equals("All Types")) {
+                    afficherStocks(); // Show all products
+                } else {
+                    filter(newValue); // Filter products based on selected type
+                }
+            }
         });
 
         table();
@@ -106,66 +121,105 @@ public class StockController {
         }
     }
 
-
-
-
     @FXML
     void add(ActionEvent event) {
         String nomProduit = tnom.getText();
-        int quantite = Integer.parseInt(tquan.getText());
-        Date date = new Date(System.currentTimeMillis());
         String produitType = ttype.getText();
-        float prix = Float.parseFloat(tprix.getText());
+        String quantiteText = tquan.getText();
+        String prixText = tprix.getText();
 
+        // Check if any of the fields are empty
+        if (nomProduit.isEmpty() || produitType.isEmpty() || quantiteText.isEmpty() || prixText.isEmpty()) {
+            showAlert("Tous les champs doivent être remplis!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // Validate and parse quantity
+        int quantite = 0;
+        try {
+            quantite = Integer.parseInt(quantiteText);
+            if (quantite <= 0) {
+                showAlert("La quantité doit être supérieure à 0!", Alert.AlertType.ERROR);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("La quantité doit être une valeur numérique!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // Validate and parse price
+        float prix = 0;
+        try {
+            prix = Float.parseFloat(prixText);
+            if (prix <= 0) {
+                showAlert("Le prix unitaire doit être supérieur à 0!", Alert.AlertType.ERROR);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Le prix unitaire doit être une valeur numérique!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // Validate product type
+        if (!produitType.matches("[a-zA-Z]+")) {
+            showAlert("Le type de produit ne doit contenir que des lettres!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // Check if the product already exists in the database
+        try {
+            Connection connection = MyDatabase.getInstance().getConnection();
+            PreparedStatement checkStatement = connection.prepareStatement("SELECT * FROM stock WHERE nom_produit = ?");
+            checkStatement.setString(1, nomProduit);
+            ResultSet resultSet = checkStatement.executeQuery();
+            if (resultSet.next()) {
+                showAlert("Le produit existe déjà dans la base de données!", Alert.AlertType.ERROR);
+                return;
+            }
+            checkStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Une erreur s'est produite lors de la vérification de l'existence du produit!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // Proceed with adding to the database
         try {
             Connection connection = MyDatabase.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO stock (nom_produit, quantite, date, type, prix) VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, nomProduit);
             preparedStatement.setInt(2, quantite);
-            preparedStatement.setDate(3, date);
+            preparedStatement.setDate(3, new Date(System.currentTimeMillis()));
             preparedStatement.setString(4, produitType);
             preparedStatement.setFloat(5, prix);
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows > 0) {
-                System.out.println("Record added successfully!");
                 // Show success message
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Add Product");
-                alert.setHeaderText("Add Product");
-                alert.setContentText("Product added successfully!");
-                alert.showAndWait();
-
+                showAlert("Produit ajouté avec succès !", Alert.AlertType.CONFIRMATION);
                 // Clear text fields after adding
                 tnom.clear();
                 tquan.clear();
                 tprix.clear();
                 ttype.clear();
-
                 // Refresh table view
                 stockTable.getItems().clear(); // Clear table
                 afficherStocks(); // Re-populate table
             } else {
-                System.out.println("Failed to add record!");
                 // Show error message
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Add Product");
-                alert.setHeaderText("Add Product");
-                alert.setContentText("Failed to add product!");
-                alert.showAndWait();
+                showAlert("Échec de l'ajout du produit !", Alert.AlertType.ERROR);
             }
 
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
             // Show error message
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Add Product");
-            alert.setHeaderText("Add Product");
-            alert.setContentText("An error occurred while adding product!");
-            alert.showAndWait();
+            showAlert("Une erreur s'est produite lors de l'ajout du produit !", Alert.AlertType.ERROR);
         }
     }
+
+
+
 
 
     @FXML
@@ -223,43 +277,21 @@ public class StockController {
 
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows > 0) {
-                    System.out.println("Record deleted successfully!");
-                    // Show success message
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete Product");
-                    alert.setHeaderText("Delete Product");
-                    alert.setContentText("Product deleted successfully!");
-                    alert.showAndWait();
-
+                    showAlert("Produit supprimé avec succès !", Alert.AlertType.CONFIRMATION);
                     // Refresh table view
                     stockTable.getItems().remove(selectedItem);
                 } else {
-                    System.out.println("Failed to delete record!");
-                    // Show error message
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Delete Product");
-                    alert.setHeaderText("Delete Product");
-                    alert.setContentText("Failed to delete product!");
-                    alert.showAndWait();
+                    showAlert("Échec de la suppression du produit !", Alert.AlertType.ERROR);
                 }
 
                 preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-                // Show error message
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Delete Product");
-                alert.setHeaderText("Delete Product");
-                alert.setContentText("An error occurred while deleting product!");
-                alert.showAndWait();
+                showAlert("Une erreur s'est produite lors de la suppression du produit !", Alert.AlertType.ERROR);
+
             }
         } else {
-            // Show error message if no item is selected
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Delete Product");
-            alert.setHeaderText("Delete Product");
-            alert.setContentText("Please select a product to delete!");
-            alert.showAndWait();
+            showAlert("Veuillez sélectionner un produit à supprimer !", Alert.AlertType.ERROR);
         }
     }
 
@@ -272,10 +304,47 @@ public class StockController {
         if (selectedItem != null) {
             // Retrieve updated values from text fields
             String newNomProduit = tnom.getText();
-            int newQuantite = Integer.parseInt(tquan.getText());
-            Date newDate = new Date(System.currentTimeMillis()); // Assuming the date is also updated
+            String newQuantiteText = tquan.getText();
+            String newPrixText = tprix.getText();
             String newProduitType = ttype.getText();
-            float newPrix = Float.parseFloat(tprix.getText());
+
+            // Check if any of the fields are empty
+            if (newNomProduit.isEmpty() || newQuantiteText.isEmpty() || newPrixText.isEmpty() || newProduitType.isEmpty()) {
+                showAlert("Tous les champs doivent être remplis!", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validate and parse quantity
+            int newQuantite = 0;
+            try {
+                newQuantite = Integer.parseInt(newQuantiteText);
+                if (newQuantite <= 0) {
+                    showAlert("La quantité doit être supérieure à 0!", Alert.AlertType.ERROR);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showAlert("La quantité doit être une valeur numérique!", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validate and parse price
+            float newPrix = 0;
+            try {
+                newPrix = Float.parseFloat(newPrixText);
+                if (newPrix <= 0) {
+                    showAlert("Le prix unitaire doit être supérieur à 0!", Alert.AlertType.ERROR);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showAlert("Le prix unitaire doit être une valeur numérique!", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validate product type
+            if (!newProduitType.matches("[a-zA-Z]+")) {
+                showAlert("Le type de produit ne doit contenir que des lettres!", Alert.AlertType.ERROR);
+                return;
+            }
 
             try {
                 // Establish connection to the database
@@ -285,7 +354,7 @@ public class StockController {
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE stock SET nom_produit = ?, quantite = ?, date = ?, type = ?, prix = ? WHERE nom_produit = ?");
                 preparedStatement.setString(1, newNomProduit);
                 preparedStatement.setInt(2, newQuantite);
-                preparedStatement.setDate(3, newDate);
+                preparedStatement.setDate(3, new Date(System.currentTimeMillis()));
                 preparedStatement.setString(4, newProduitType);
                 preparedStatement.setFloat(5, newPrix);
                 preparedStatement.setString(6, selectedItem.getNom_produit());
@@ -294,53 +363,32 @@ public class StockController {
                 int affectedRows = preparedStatement.executeUpdate();
 
                 if (affectedRows > 0) {
-                    System.out.println("Record updated successfully!");
-                    // Show success message
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Update Product");
-                    alert.setHeaderText("Update Product");
-                    alert.setContentText("Product updated successfully!");
-                    alert.showAndWait();
+                    showAlert("Produit mis à jour avec succès !", Alert.AlertType.CONFIRMATION);
 
                     // Update the selected item in the observable list
                     selectedItem.setNom_produit(newNomProduit);
                     selectedItem.setQuantite(newQuantite);
-                    selectedItem.setDate(newDate);
                     selectedItem.setType(newProduitType);
                     selectedItem.setPrix(newPrix);
 
                     // Refresh table view
                     stockTable.refresh();
                 } else {
-                    System.out.println("Failed to update record!");
-                    // Show error message
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Update Product");
-                    alert.setHeaderText("Update Product");
-                    alert.setContentText("Failed to update product!");
-                    alert.showAndWait();
+                    showAlert("Échec de la mise à jour du produit !", Alert.AlertType.ERROR);
                 }
 
                 // Close prepared statement
                 preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-                // Show error message
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Update Product");
-                alert.setHeaderText("Update Product");
-                alert.setContentText("An error occurred while updating product!");
-                alert.showAndWait();
+                showAlert("Une erreur s'est produite lors de la mise à jour du produit !", Alert.AlertType.ERROR);
             }
         } else {
             // Show error message if no item is selected
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Update Product");
-            alert.setHeaderText("Update Product");
-            alert.setContentText("Please select a product to update!");
-            alert.showAndWait();
+            showAlert("Veuillez sélectionner un produit à mettre à jour !", Alert.AlertType.ERROR);
         }
     }
+
 
     void rechercher(String nomProduit) {
         ObservableList<stock> stocks = FXCollections.observableArrayList();
@@ -366,6 +414,68 @@ public class StockController {
     }
 
 
+    private void showAlert(String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+    private void populateTypeChoice() {
+        try {
+            Connection connection = MyDatabase.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT type FROM stock");
+            ObservableList<String> types = FXCollections.observableArrayList();
+            types.add("All Types"); // Add "All Types" option
+            while (resultSet.next()) {
+                types.add(resultSet.getString("type"));
+            }
+            typeChoice.setItems(types);
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void filter(String selectedType) {
+        ObservableList<stock> filteredStocks = FXCollections.observableArrayList();
+        try {
+            Connection connection = MyDatabase.getInstance().getConnection();
+            PreparedStatement preparedStatement;
+            if (selectedType.equals("All Types")) {
+                preparedStatement = connection.prepareStatement("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock`");
+            } else {
+                preparedStatement = connection.prepareStatement("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock` WHERE `type` = ?");
+                preparedStatement.setString(1, selectedType);
+            }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                stock s = new stock(
+                        resultSet.getString("nom_produit"),
+                        resultSet.getInt("quantite"),
+                        resultSet.getDate("date"),
+                        resultSet.getString("type"),
+                        resultSet.getFloat("prix"));
+                filteredStocks.add(s);
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        stockTable.setItems(filteredStocks);
+    }
+
+
+    @FXML
+    private void refresh(ActionEvent event) {
+        tnom.clear();
+        tquan.clear();
+        ttype.clear();
+        tprix.clear();
+    }
 
 
 }
