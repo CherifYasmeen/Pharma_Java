@@ -23,3 +23,5 @@ d
 4src/main/java/com/enigmaaa/BlogClientController.java,4\7\47dd54764a43296d8542e05d69fdd0cfd828bf99
 ^
 .src/main/java/com/enigmaaa/HomeController.java,a\b\ab1ca3368e5ea0711c9410a136b596aea386cdd9
+U
+%src/main/java/models/fournisseur.java,2\9\295451db46476c2aaaf62445ec02b687752ae109

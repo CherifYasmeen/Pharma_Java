@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import models.fournisseur;
 import models.stock;
 import utils.MyDatabase;
 import javafx.event.ActionEvent;
@@ -42,6 +43,10 @@ public class StockController {
     private TableColumn<stock, Float> prixx;
 
     @FXML
+    private TableColumn<stock, String> fourn;
+
+
+    @FXML
     private Button retour;
 
     @FXML
@@ -59,6 +64,7 @@ public class StockController {
     @FXML
     private TextField tprix;
 
+
     @FXML
     private TextField tquan;
 
@@ -67,6 +73,12 @@ public class StockController {
 
     @FXML
     private ChoiceBox<String> typeChoice;
+
+
+    @FXML
+    private ChoiceBox<String> fourChoice;
+
+
 
     @FXML
     private TextField nomChoice;
@@ -85,7 +97,8 @@ public class StockController {
             rechercher(newValue);
         });
 
-        populateTypeChoice(); // Populate the ChoiceBox with available types
+        populateTypeChoice();
+        populatefourChoice();
 
         typeChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -108,20 +121,28 @@ public class StockController {
         datep.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getDate()));
         type.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getType()));
         prixx.setCellValueFactory(data -> new SimpleFloatProperty(data.getValue().getPrix()).asObject()); // Corrected cell value factory
+        fourn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFournisseurEmail()));
     }
 
     private void afficherStocks() {
         try {
             Connection connection = MyDatabase.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock`");
+            ResultSet resultSet = statement.executeQuery("SELECT s.nom_produit, s.type, s.date, s.quantite, s.prix, \n" +
+                    "       CASE \n" +
+                    "           WHEN f.id IS NULL THEN 'Pas de fournisseur'\n" +
+                    "           ELSE f.email\n" +
+                    "       END AS email\n" +
+                    "FROM stock s\n" +
+                    "LEFT JOIN fournisseur f ON f.id = s.fournisseur_id;\n");
             while (resultSet.next()) {
                 stock s = new stock(
                         resultSet.getString("nom_produit"),
-                        resultSet.getInt("quantite"),
-                        resultSet.getDate("date"),
                         resultSet.getString("type"),
-                        resultSet.getFloat("prix"));
+                        resultSet.getDate("date"),
+                        resultSet.getInt("quantite"),
+                        resultSet.getFloat("prix"),
+                        resultSet.getString("email"));
                 stockTable.getItems().add(s);
                 System.out.println(s);
             }
@@ -131,12 +152,14 @@ public class StockController {
         }
     }
 
+
     @FXML
     void add(ActionEvent event) {
         String nomProduit = tnom.getText();
         String produitType = ttype.getText();
         String quantiteText = tquan.getText();
         String prixText = tprix.getText();
+        String fournisseurEmail = fourChoice.getValue();
 
         // Check if any of the fields are empty
         if (nomProduit.isEmpty() || produitType.isEmpty() || quantiteText.isEmpty() || prixText.isEmpty()) {
@@ -196,12 +219,14 @@ public class StockController {
         // Proceed with adding to the database
         try {
             Connection connection = MyDatabase.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO stock (nom_produit, quantite, date, type, prix) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO stock (nom_produit, type, date, quantite, prix, fournisseur_id) VALUES (?, ?, ?, ?, ?, (SELECT id FROM fournisseur WHERE email = ?))");
             preparedStatement.setString(1, nomProduit);
-            preparedStatement.setInt(2, quantite);
+            preparedStatement.setString(2, produitType);
             preparedStatement.setDate(3, new Date(System.currentTimeMillis()));
-            preparedStatement.setString(4, produitType);
+            preparedStatement.setInt(4, quantite);
             preparedStatement.setFloat(5, prix);
+            preparedStatement.setString(6, fournisseurEmail);
+
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows > 0) {
@@ -234,27 +259,6 @@ public class StockController {
 
     @FXML
     public void table() {
-        Connection connection = MyDatabase.getInstance().getConnection();
-
-        ObservableList<stock> stocks = FXCollections.observableArrayList();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock`");
-            while (resultSet.next()) {
-                stock s = new stock(
-                        resultSet.getString("nom_produit"),
-                        resultSet.getInt("quantite"),
-                        resultSet.getDate("date"),
-                        resultSet.getString("type"),
-                        resultSet.getFloat("prix"));
-                stocks.add(s);
-            }
-            statement.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        stockTable.setItems(stocks);
-
         stockTable.setRowFactory(tv -> {
             TableRow<stock> myRow = new TableRow<>();
             myRow.setOnMouseClicked(event -> {
@@ -266,6 +270,15 @@ public class StockController {
                         tquan.setText(String.valueOf(selectedItem.getQuantite()));
                         ttype.setText(selectedItem.getType());
                         tprix.setText(String.valueOf(selectedItem.getPrix()));
+
+                        // Set the selected fournisseur email in the choice box
+                        String fournisseurEmail = selectedItem.getFournisseurEmail();
+                        if (fournisseurEmail != null) {
+                            fourChoice.setValue(fournisseurEmail);
+                        } else {
+                            // If no fournisseur is associated, set the choice box value to null
+                            fourChoice.setValue(null);
+                        }
                     }
                 }
             });
@@ -317,6 +330,7 @@ public class StockController {
             String newQuantiteText = tquan.getText();
             String newPrixText = tprix.getText();
             String newProduitType = ttype.getText();
+            String newFournisseurEmail = fourChoice.getValue(); // Get selected fournisseur email from choice box
 
             // Check if any of the fields are empty
             if (newNomProduit.isEmpty() || newQuantiteText.isEmpty() || newPrixText.isEmpty() || newProduitType.isEmpty()) {
@@ -361,13 +375,14 @@ public class StockController {
                 Connection connection = MyDatabase.getInstance().getConnection();
 
                 // Construct SQL update statement
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE stock SET nom_produit = ?, quantite = ?, date = ?, type = ?, prix = ? WHERE nom_produit = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE stock SET nom_produit = ?, type = ?, date = ?, quantite = ?, prix = ?, fournisseur_id = (SELECT id FROM fournisseur WHERE email = ?) WHERE nom_produit = ?");
                 preparedStatement.setString(1, newNomProduit);
-                preparedStatement.setInt(2, newQuantite);
+                preparedStatement.setString(2, newProduitType);
                 preparedStatement.setDate(3, new Date(System.currentTimeMillis()));
-                preparedStatement.setString(4, newProduitType);
+                preparedStatement.setInt(4, newQuantite);
                 preparedStatement.setFloat(5, newPrix);
-                preparedStatement.setString(6, selectedItem.getNom_produit());
+                preparedStatement.setString(6, newFournisseurEmail);
+                preparedStatement.setString(7, selectedItem.getNom_produit());
 
                 // Execute update statement
                 int affectedRows = preparedStatement.executeUpdate();
@@ -380,6 +395,8 @@ public class StockController {
                     selectedItem.setQuantite(newQuantite);
                     selectedItem.setType(newProduitType);
                     selectedItem.setPrix(newPrix);
+                    // Update fournisseur email
+                    selectedItem.setFournisseurEmail(newFournisseurEmail);
 
                     // Refresh table view
                     stockTable.refresh();
@@ -404,16 +421,17 @@ public class StockController {
         ObservableList<stock> stocks = FXCollections.observableArrayList();
         try {
             Connection connection = MyDatabase.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock` WHERE `nom_produit` LIKE ?");
-            preparedStatement.setString(1, "%" + nomProduit + "%"); // Using LIKE operator
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT s.nom_produit, s.type, s.date, s.quantite, s.prix, IFNULL(f.email, 'pas de fournisseur') AS email FROM stock s LEFT JOIN fournisseur f ON f.id = s.fournisseur_id WHERE s.nom_produit LIKE ?");
+            preparedStatement.setString(1, "%" + nomProduit + "%"); // Utilisation de l'opérateur LIKE
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 stock s = new stock(
                         resultSet.getString("nom_produit"),
-                        resultSet.getInt("quantite"),
-                        resultSet.getDate("date"),
                         resultSet.getString("type"),
-                        resultSet.getFloat("prix"));
+                        resultSet.getDate("date"),
+                        resultSet.getInt("quantite"),
+                        resultSet.getFloat("prix"),
+                        resultSet.getString("email"));
                 stocks.add(s);
             }
             preparedStatement.close();
@@ -424,12 +442,38 @@ public class StockController {
     }
 
 
-    private void showAlert(String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    @FXML
+    private void filter(String selectedType) {
+        ObservableList<stock> filteredStocks = FXCollections.observableArrayList();
+        try {
+            Connection connection = MyDatabase.getInstance().getConnection();
+            PreparedStatement preparedStatement;
+            if (selectedType.equals("All Types")) {
+                preparedStatement = connection.prepareStatement("SELECT s.nom_produit, s.type, s.date, s.quantite, s.prix, IFNULL(f.email, 'pas de fournisseur') AS email FROM stock s LEFT JOIN fournisseur f ON f.id = s.fournisseur_id");
+            } else {
+                preparedStatement = connection.prepareStatement("SELECT s.nom_produit, s.type, s.date, s.quantite, s.prix, IFNULL(f.email, 'pas de fournisseur') AS email FROM stock s LEFT JOIN fournisseur f ON f.id = s.fournisseur_id WHERE s.type = ?");
+                preparedStatement.setString(1, selectedType);
+            }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                stock s = new stock(
+                        resultSet.getString("nom_produit"),
+                        resultSet.getString("type"),
+                        resultSet.getDate("date"),
+                        resultSet.getInt("quantite"),
+                        resultSet.getFloat("prix"),
+                        resultSet.getString("email")); // Ajout de l'email du fournisseur
+                filteredStocks.add(s);
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        stockTable.setItems(filteredStocks);
     }
+
+
+
 
 
     private void populateTypeChoice() {
@@ -449,34 +493,28 @@ public class StockController {
         }
     }
 
-    @FXML
-    private void filter(String selectedType) {
-        ObservableList<stock> filteredStocks = FXCollections.observableArrayList();
+
+    private void populatefourChoice() {
         try {
             Connection connection = MyDatabase.getInstance().getConnection();
-            PreparedStatement preparedStatement;
-            if (selectedType.equals("All Types")) {
-                preparedStatement = connection.prepareStatement("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock`");
-            } else {
-                preparedStatement = connection.prepareStatement("SELECT `nom_produit`, `quantite`, `date`, `type` , `prix` FROM `stock` WHERE `type` = ?");
-                preparedStatement.setString(1, selectedType);
-            }
-            ResultSet resultSet = preparedStatement.executeQuery();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT email FROM fournisseur");
+            ObservableList<String> emails = FXCollections.observableArrayList();
+
+            // Add "pas de fournisseur" choice representing null values
+            emails.add("pas de fournisseur");
+
             while (resultSet.next()) {
-                stock s = new stock(
-                        resultSet.getString("nom_produit"),
-                        resultSet.getInt("quantite"),
-                        resultSet.getDate("date"),
-                        resultSet.getString("type"),
-                        resultSet.getFloat("prix"));
-                filteredStocks.add(s);
+                emails.add(resultSet.getString("email"));
             }
-            preparedStatement.close();
+            fourChoice.setItems(emails);
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        stockTable.setItems(filteredStocks);
     }
+
+
 
 
     @FXML
@@ -487,11 +525,21 @@ public class StockController {
         tprix.clear();
         nomChoice.clear();
 
+        populateTypeChoice();
+        populatefourChoice();
+
 
         stockTable.getItems().clear();
         afficherStocks();
     }
 
+
+    private void showAlert(String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 
     private void loadScene(String fxmlFileName) {

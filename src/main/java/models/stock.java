@@ -8,6 +8,12 @@ public class stock {
     private String nom_produit,type;
     private Float prix ;
     private Date date;
+    private int fournisseur_id;
+    private String fournisseurEmail;
+
+
+
+
     public stock() {
 
     }
@@ -20,12 +26,21 @@ public class stock {
         this.prix = prix ;
     }
 
-    public stock( String nom_produit,int quantite , Date date, String type, Float prix) {
+    public stock( String nom_produit, String type, Date date,int quantite , Float prix) {
         this.quantite = quantite;
         this.nom_produit = nom_produit;
         this.type = type;
         this.date = date;
         this.prix = prix ;
+    }
+
+    public stock( String nom_produit, String type, Date date , int quantite , Float prix , String fournisseurEmail) {
+        this.quantite = quantite;
+        this.nom_produit = nom_produit;
+        this.type = type;
+        this.date = date;
+        this.prix = prix ;
+        this.fournisseurEmail = fournisseurEmail;
     }
 
 
@@ -80,17 +95,33 @@ public class stock {
         this.prix = prix;
     }
 
-    @Override
-    public String toString() {
-        return "stock{" +
-                "id=" + id +
-                ", quantite=" + quantite +
-                ", nom_produit='" + nom_produit + '\'' +
-                ", type='" + type + '\'' +
-                ", date=" + date + '\'' +
-                ", prix=" + prix +
-                '}';
+
+    public int getFournisseur_id() {
+        return fournisseur_id;
+    }
+
+    public void setFournisseur_id(int fournisseur_id) {
+        this.fournisseur_id = fournisseur_id;
     }
 
 
+    public String getFournisseurEmail() {
+        return fournisseurEmail;
+    }
+
+    public void setFournisseurEmail(String fournisseurEmail) {
+        this.fournisseurEmail = fournisseurEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "stock{" +
+                "fournisseurEmail='" + fournisseurEmail + '\'' +
+                ", date=" + date +
+                ", prix=" + prix +
+                ", type='" + type + '\'' +
+                ", nom_produit='" + nom_produit + '\'' +
+                ", quantite=" + quantite +
+                '}';
+    }
 }
