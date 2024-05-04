@@ -16,9 +16,16 @@ import models.stock;
 import utils.MyDatabase;
 import javafx.event.ActionEvent;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -90,6 +97,9 @@ public class StockController {
 
     @FXML
     public void initialize() {
+
+        startAutomaticStockCheck();
+
         initializeColumns();
         afficherStocks();
 
@@ -515,6 +525,49 @@ public class StockController {
     }
 
 
+    public void informSupplier() {
+        String username = "khalilichri@gmail.com";
+        String password = "suufmxngzjbbbkaf";
+        String NomProduit = tnom.getText();
+        String supplierEmail = fourChoice.getValue();
+
+        if (supplierEmail == null || supplierEmail.isEmpty() || supplierEmail.equals("pas de fournisseur")) {
+            showAlert("No supplier email available.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        String subject = "Besoin de plus de produits en stock";
+        String content = "Cher fournisseur,\n\nNous tenons à vous informer que nous avons besoin de plus du produit suivant en stock : " + NomProduit + "\n\nVeuillez prendre les mesures nécessaires pour répondre à cette demande.\n\nCordialement,\nENIGMA";
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.ssl.trust", "*");
+        properties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(supplierEmail));
+            message.setSubject(subject);
+            message.setText(content);
+
+            Transport.send(message);
+            showAlert("Email sent to supplier.", Alert.AlertType.INFORMATION);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            showAlert("Failed to send email.", Alert.AlertType.ERROR);
+        }
+    }
 
 
     @FXML
@@ -554,6 +607,70 @@ public class StockController {
         }
 
     }
+
+
+
+    public void startAutomaticStockCheck() {
+        Timer timer = new Timer();
+        // Planifiez la vérification toutes les 2 heures (3600000 millisecondes)
+        timer.scheduleAtFixedRate(new StockCheckTask(), 0, 120000 );
+    }
+
+    class StockCheckTask extends TimerTask {
+        @Override
+        public void run() {
+            for (stock product : stockTable.getItems()) {
+                if (product.getQuantite() <= 50) {
+                    // Si le stock est inférieur ou égal à 50, envoyez un e-mail au fournisseur
+                    autoinform(product.getNom_produit(), product.getFournisseurEmail());
+                }
+            }
+        }
+    }
+
+    private void autoinform(String NomProduit, String supplierEmail) {
+
+        String username = "khalilichri@gmail.com";
+        String password = "suufmxngzjbbbkaf";
+
+        if (supplierEmail == null || supplierEmail.isEmpty() || supplierEmail.equals("pas de fournisseur")) {
+            showAlert("No supplier email available.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        String subject = "Besoin de plus de produits en stock";
+        String content = "Cher fournisseur,\n\nNous tenons à vous informer que nous avons besoin de plus du produit suivant en stock : " + NomProduit + "\n\nVeuillez prendre les mesures nécessaires pour répondre à cette demande.\n\nCordialement,\nENIGMA";
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.ssl.trust", "*");
+        properties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(supplierEmail));
+            message.setSubject(subject);
+            message.setText(content);
+
+            Transport.send(message);
+            showAlert("Email sent to supplier.", Alert.AlertType.INFORMATION);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            showAlert("Failed to send email.", Alert.AlertType.ERROR);
+        }    }
+
+
 
 
 }

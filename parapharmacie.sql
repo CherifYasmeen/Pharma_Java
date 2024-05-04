@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 23, 2024 at 03:10 PM
+-- Generation Time: May 04, 2024 at 09:00 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.13
 
@@ -134,9 +134,9 @@ CREATE TABLE IF NOT EXISTS `fournisseur` (
 --
 
 INSERT INTO `fournisseur` (`id`, `nom`, `prenom`, `email`, `telephone`, `ville`) VALUES
-(1, 'Hichri', 'Khalil ', 'hichri.khalil@gmail.com', 50306543, 'Hammamet'),
-(3, 'Ben Salah', 'Mohsen', 'mohsenbensalah@gmail.com', 52416258, 'Sousse'),
-(4, 'Gadhrib', 'Ahmed', 'ahmedgadhrib@gmail.com', 25146352, 'Aryannah');
+(1, 'Hichri', 'Khalil ', 'khalilochri99@gmail.com', 50306543, 'Hammamet'),
+(3, 'Ben Salah', 'Mohsen', 'aenemy95@gmail.com', 52416258, 'Sousse'),
+(4, 'Gadhrib', 'Ahmed', 'gadhribhela@gmail.com', 25146352, 'Aryannah');
 
 -- --------------------------------------------------------
 
@@ -267,13 +267,13 @@ CREATE TABLE IF NOT EXISTS `stock` (
 
 INSERT INTO `stock` (`id`, `fournisseur_id`, `nom_produit`, `type`, `quantite`, `prix`, `date`) VALUES
 (1, 1, 'SUN SECURE Crème SPF50+', 'Visage', 500, 51.5, '2024-02-19'),
-(2, 0, 'GEL MOUSSANT PURIFIANT 400 ML', 'Corps', 120, 73.029, '2024-03-12'),
+(2, 1, 'GEL MOUSSANT PURIFIANT 400 ML', 'Corps', 120, 73.029, '2024-05-04'),
 (3, 4, 'HYFAC MOUSSE A RASER 150ML', 'Homme', 250, 32.684, '2024-04-10'),
-(5, 3, 'ROGE CAVAILLES', 'Hygiene', 85, 28, '2024-04-21'),
-(14, 3, 'LOREAL Paris Elvive Dream Long Shampooing', 'Cheveux', 155, 15.75, '2024-04-21'),
+(5, 3, 'ROGE CAVAILLES', 'Hygiene', 150, 28, '2024-05-04'),
+(14, 3, 'LOREAL Paris Elvive Dream Long Shampooing', 'Cheveux', 2, 15.75, '2024-04-21'),
 (15, 4, 'MUSTELA Bébé Crème pour le Change 1-2-3', 'Bebe', 200, 18.5, '2024-04-23'),
 (16, 1, 'GILLETTE Mach3 Rasoir Jetable', 'Homme', 156, 35.99, '2024-04-21'),
-(30, NULL, 'aaaaaaaa', 'aaaaaaaa', 4, 4, '2024-04-23');
+(30, 4, 'aaaaaaaa', 'aaaaaaaa', 4, 4, '2024-05-04');
 
 -- --------------------------------------------------------
 

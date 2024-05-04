@@ -1,42 +1,48 @@
 
 l
-java:S1192i"JDefine a constant instead of duplicating this literal "All Types" 3 times.(ô·±Àûÿÿÿÿ8¼å‚Üğ1
-d
-java:S1192‘"FDefine a constant instead of duplicating this literal "email" 4 times.(Æòéƒ8ñŒïÛğ1
+java:S1192s"JDefine a constant instead of duplicating this literal "All Types" 3 times.(ô·±Àûÿÿÿÿ8êËåªô1
+q
+java:S1192ƒ"SDefine a constant instead of duplicating this literal "pas de fournisseur" 3 times.(¤·ùŒ8ìËåªô1
 f
-java:S1192"IDefine a constant instead of duplicating this literal "quantite" 3 times.(ü†¿a8½å‚Üğ1
+java:S1192™"IDefine a constant instead of duplicating this literal "quantite" 3 times.(ü†¿a8ìËåªô1
+d
+java:S1192›"FDefine a constant instead of duplicating this literal "email" 4 times.(Æòéƒ8ìËåªô1
 i
-java:S1192Œ"LDefine a constant instead of duplicating this literal "nom_produit" 3 times.(ŠÉR8½å‚Üğ1
+java:S1192–"LDefine a constant instead of duplicating this literal "nom_produit" 3 times.(ŠÉR8ìËåªô1
+s	java:S117“"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Õû¼¼úÿÿÿÿ8ìËåªô1
+m	java:S117÷"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Å´8ìËåªô1
 j
-java:S2095‚"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8ÚúşÛğ1
+java:S2095ì"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8¦Ìåªô1
 m
-java:S2095Æ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌâÌö8òå‚Üğ1
+java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÄúÁ¼8¦Ìåªô1
+r
+java:S2095²"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¸äÆüÿÿÿÿ8¦Ìåªô1
+r
+java:S2095×"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ûˆ•†şÿÿÿÿ8¦Ìåªô1
+m
+java:S2095Ğ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌâÌö8¦Ìåªô1
 j
-java:S2095ô"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8°ŞğÛğ1
+java:S2095Œ"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8¦Ìåªô1
 j
-java:S2095â"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8ÙúşÛğ1
-r
-java:S2095Ş"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÿáŞÂıÿÿÿÿ8üµƒÜğ1
-r
-java:S2095Í"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ûˆ•†şÿÿÿÿ8üµƒÜğ1
+java:S2095ş"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8¦Ìåªô1
 m
-java:S2095ú"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÄúÁ¼8üµƒÜğ1
+java:S2095´"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8¦Ìåªô1
 r
-java:S2095¨"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¸äÆüÿÿÿÿ8ÚúşÛğ1
+java:S2095è"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÿáŞÂıÿÿÿÿ8¦Ìåªô1
 m
-java:S2095Ä"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(°¯à¶8òå‚Üğ1
-m
-java:S2095ª"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8ıµƒÜğ1
+java:S2095Î"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(°¯à¶8¦Ìåªô1
 N
-java:S1602`",Remove useless curly braces around statement(¨ÈíÁùÿÿÿÿ8ºïÛğ1
+java:S1602j",Remove useless curly braces around statement(¨ÈíÁùÿÿÿÿ8ªÌåªô1
 P
-java:S6126ƒ"2Replace this String concatenation with Text block.(û”×¡8¿ïÛğ1
-M	java:S106“"+Replace this use of System.out by a logger.(Å­Ëİúÿÿÿÿ8ÀïÛğ1
+java:S6126"2Replace this String concatenation with Text block.(û”×¡8®Ìåªô1
+M	java:S106"+Replace this use of System.out by a logger.(Å­Ëİúÿÿÿÿ8¯Ìåªô1
 u
-java:S3776Â"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(©”ìîúÿÿÿÿ8ÏïÛğ1
+java:S3776Ì"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(©”ìîúÿÿÿÿ8¹Ìåªô1
 Q
-java:S1128"/Remove this unused import 'models.fournisseur'.(„Íóñıÿÿÿÿ8¬¶ƒÜğ1
+java:S1128"/Remove this unused import 'models.fournisseur'.(„Íóñıÿÿÿÿ8ÑÌåªô1
 Q
-java:S1128"4Remove this unused import 'java.util.logging.Level'.(…µÛ¶8­¶ƒÜğ1
+java:S1128"4Remove this unused import 'java.util.logging.Level'.(…µÛ¶8ÑÌåªô1
 R
-java:S1128"5Remove this unused import 'java.util.logging.Logger'.(ƒ¥óš8­¶ƒÜğ1
+java:S1128"5Remove this unused import 'java.util.logging.Logger'.(ƒ¥óš8ÑÌåªô1
+D
+java:S3398÷"'Move this method into "StockCheckTask".(Å´8ÑÌåªô1
