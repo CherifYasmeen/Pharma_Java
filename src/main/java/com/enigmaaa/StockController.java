@@ -633,10 +633,6 @@ public class StockController {
         String username = "khalilichri@gmail.com";
         String password = "suufmxngzjbbbkaf";
 
-        if (supplierEmail == null || supplierEmail.isEmpty() || supplierEmail.equals("pas de fournisseur")) {
-            showAlert("No supplier email available.", Alert.AlertType.ERROR);
-            return;
-        }
 
         String subject = "Besoin de plus de produits en stock";
         String content = "Cher fournisseur,\n\nNous tenons à vous informer que nous avons besoin de plus du produit suivant en stock : " + NomProduit + "\n\nVeuillez prendre les mesures nécessaires pour répondre à cette demande.\n\nCordialement,\nENIGMA";
@@ -664,10 +660,8 @@ public class StockController {
             message.setText(content);
 
             Transport.send(message);
-            showAlert("Email sent to supplier.", Alert.AlertType.INFORMATION);
         } catch (MessagingException e) {
             e.printStackTrace();
-            showAlert("Failed to send email.", Alert.AlertType.ERROR);
         }    }
 
 

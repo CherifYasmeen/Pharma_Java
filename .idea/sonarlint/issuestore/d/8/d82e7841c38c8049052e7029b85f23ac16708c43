@@ -1,8 +1,6 @@
 
 l
 java:S1192s"JDefine a constant instead of duplicating this literal "All Types" 3 times.(ô·±Àûÿÿÿÿ8ç¡Øô1
-q
-java:S1192ƒ"SDefine a constant instead of duplicating this literal "pas de fournisseur" 3 times.(¤·ùŒ8ç¡Øô1
 f
 java:S1192™"IDefine a constant instead of duplicating this literal "quantite" 3 times.(ü†¿a8ç¡Øô1
 d
@@ -11,26 +9,26 @@ i
 java:S1192–"LDefine a constant instead of duplicating this literal "nom_produit" 3 times.(ŠÉR8ç¡Øô1
 s	java:S117“"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Õû¼¼úÿÿÿÿ8ç¡Øô1
 m	java:S117÷"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Å´8ç¡Øô1
-j
-java:S2095ş"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Œè¡Øô1
-m
-java:S2095Ğ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌâÌö8Œè¡Øô1
-j
-java:S2095ì"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Œè¡Øô1
 r
 java:S2095×"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ûˆ•†şÿÿÿÿ8Œè¡Øô1
-r
-java:S2095è"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÿáŞÂıÿÿÿÿ8Œè¡Øô1
-m
-java:S2095´"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8Œè¡Øô1
-m
-java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÄúÁ¼8Œè¡Øô1
 m
 java:S2095Î"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(°¯à¶8Œè¡Øô1
+m
+java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÄúÁ¼8Œè¡Øô1
+r
+java:S2095è"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÿáŞÂıÿÿÿÿ8Œè¡Øô1
 r
 java:S2095²"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¸äÆüÿÿÿÿ8Œè¡Øô1
 j
+java:S2095ì"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Œè¡Øô1
+m
+java:S2095Ğ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌâÌö8Œè¡Øô1
+j
+java:S2095ş"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Œè¡Øô1
+j
 java:S2095Œ"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Œè¡Øô1
+m
+java:S2095´"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÌÙİ8Œè¡Øô1
 N
 java:S1602j",Remove useless curly braces around statement(¨ÈíÁùÿÿÿÿ8‘è¡Øô1
 P
