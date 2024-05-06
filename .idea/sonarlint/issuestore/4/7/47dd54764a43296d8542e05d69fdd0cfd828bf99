@@ -1,8 +1,36 @@
 
-s	java:S117€"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ïù°ôıÿÿÿÿ8Ô…ê”ğ1
+s	java:S117”"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ïù°ôıÿÿÿÿ8şıøØô1
 i
-java:S2095g"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8Äùê”ğ1
+java:S2095{"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8¾şøØô1
 m
-java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ò´°8Äùê”ğ1
+java:S2095˜"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ò´°8¾şøØô1
+]	java:S125d"<This block of commented-out lines of code should be removed.(à¨“óüÿÿÿÿ8ÆşøØô1
 N
-java:S1602T",Remove useless curly braces around statement(¨ÈíÁùÿÿÿÿ8Éùê”ğ1
+java:S1602h",Remove useless curly braces around statement(¨ÈíÁùÿÿÿÿ8ÆşøØô1
+|
+java:S2142Ç"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(”ı¾8×şøØô1
+M	java:S106Ú"+Replace this use of System.out by a logger.(¨¡´ûÿÿÿÿÿ8Š•ˆÙô1
+k	java:S100ñ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ôÎ’Ÿ8ÛşøØô1
+_
+java:S1075”"ARefactor your code to get this URI from a customizable parameter.(“Ş¨ë8ŞşøØô1
+d
+java:S1075—"ARefactor your code to get this URI from a customizable parameter.(—¦·ûÿÿÿÿ8ßşøØô1
+d
+java:S1075š"ARefactor your code to get this URI from a customizable parameter.(æËŸ®ûÿÿÿÿ8ßşøØô1
+M	java:S106¡"+Replace this use of System.err by a logger.(çúÒ˜şÿÿÿÿ8âşøØô1
+T
+java:S1128"7Remove this unused import 'com.google.gson.JsonObject'.(µÊ´½8‘•ˆÙô1
+T
+java:S1128"7Remove this unused import 'com.google.gson.JsonParser'.(Œƒ¸Æ8‘•ˆÙô1
+P
+java:S1128"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8äşøØô1
+S
+java:S1128"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ8äşøØô1
+T
+java:S1128"7Remove this unused import 'java.net.HttpURLConnection'.(¬¬˜­8äşøØô1
+K
+java:S1128")Remove this unused import 'java.net.URL'.(ñìÁ„üÿÿÿÿ8äşøØô1
+M
+java:S1128"0Remove this unused import 'java.net.URLEncoder'.(ê¢ºÆ8äşøØô1
+[
+java:S1128">Remove this unused import 'java.nio.charset.StandardCharsets'.(ï˜ŞÛ8äşøØô1

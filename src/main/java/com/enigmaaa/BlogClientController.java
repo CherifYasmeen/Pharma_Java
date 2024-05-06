@@ -1,26 +1,37 @@
 package com.enigmaaa;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import models.blog;
 import utils.MyDatabase;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.Date;
+import java.util.Objects;
 
 public class BlogClientController {
 
@@ -36,6 +47,15 @@ public class BlogClientController {
     @FXML
     private TableColumn<blog, String> contentColumn;
 
+    @FXML
+    private TextField ville;
+
+
+    @FXML
+    private Label currentTempLabel;
+
+    @FXML
+    private Label humidityLabel;
 
     @FXML
     private TableColumn<blog, Date> publicationDateColumn;
@@ -59,14 +79,17 @@ public class BlogClientController {
     private TextField txtContent;
 
     @FXML
-    private ImageView iv;
+    private ImageView weatherimage;
 
-    @FXML
-    private ImageView iv1;
+
 
 
     @FXML
     private TextField nomChoice;
+
+
+    //  clé d'API OpenWeatherMap
+    private static final String API_KEY = "ec1e3d274394b5cecc3025749df08f92";
 
 
     @FXML
@@ -74,12 +97,9 @@ public class BlogClientController {
         initializeColumns();
         displayBlogs();
 
-        Image myImage = new Image(getClass().getResourceAsStream("/images/health.png"));
+    /*  Image myImage = new Image(getClass().getResourceAsStream("/images/care.jpg"));
         iv.setImage(myImage);
-
-        Image myImage1 = new Image(getClass().getResourceAsStream("/images/care.jpg"));
-        iv1.setImage(myImage1);
-
+*/
 
         nomChoice.textProperty().addListener((observable, oldValue, newValue) -> {
             rechercher(newValue);
@@ -157,5 +177,121 @@ public class BlogClientController {
         } catch (IOException e) {
             e.printStackTrace();
         }}
+
+
+    // Méthode pour récupérer les données météorologiques d'une ville spécifique
+    private String getWeatherData(String city) {
+        try {
+            // Construire l'URL de l'API OpenWeatherMap avec le nom de la ville
+            String apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + API_KEY + "&units=metric";
+
+            // Créer une connexion HTTP
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(apiUrl))
+                    .build();
+
+            // Envoyer une requête GET et récupérer la réponse
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // Retourner les données de réponse
+            return response.body();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Méthode pour afficher les données météorologiques dans l'interface utilisateur
+    private void displayWeatherData(String weatherData) {
+        if (weatherData != null) {
+            // Extraire les valeurs de température directement à partir de la réponse
+            double currentTemp = Double.parseDouble(getValueFromResponse(weatherData, "\"temp\":"));
+            double humidity = Double.parseDouble(getValueFromResponse(weatherData, "\"humidity\":"));
+            currentTempLabel.setText("");
+            humidityLabel.setText("");
+            // Update UI with weather information
+            currentTempLabel.setText( currentTemp + "°C");
+            humidityLabel.setText( humidity + "%");
+            displayWeatherImage(currentTemp);
+        } else {
+            System.out.println("Erreur lors de la récupération des données météorologiques.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Erreur lors de la récupération des données météorologiques");
+            alert.showAndWait();
+
+        }
+    }
+
+    // Méthode utilitaire pour extraire la valeur d'un champ spécifique de la réponse JSON
+    private String getValueFromResponse(String response, String field) {
+        int index = response.indexOf(field);
+        if (index != -1) {
+            int startIndex = index + field.length();
+            int endIndex = response.indexOf(",", startIndex);
+            return response.substring(startIndex, endIndex);
+        }
+        return null;
+    }
+
+
+    // Méthode pour récupérer les données météorologiques pour la ville spécifiée dans le champ ville
+    @FXML
+    public void SearchWeather(ActionEvent event) {
+        String city = ville.getText();
+
+        // Check if the search field is empty
+        if (city.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir le nom d'une ville.");
+            alert.showAndWait();
+            return; // Exit the method
+        }
+
+        String weatherData = getWeatherData(city);
+
+        // Check if the weather data is null or empty
+        if (weatherData == null || weatherData.isEmpty()) {
+            // Show an error alert
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Impossible de trouver des données météorologiques pour cette ville.");
+            alert.showAndWait();
+            return; // Exit the method
+        }
+
+        // Display weather data
+        displayWeatherData(weatherData);
+    }
+
+
+
+    private void displayWeatherImage(double currentTemp) {
+        String imagePath = "";
+
+        if (currentTemp >= 25) {
+            // Hot weather
+            imagePath = "/images/hot.jpg";
+        } else if (currentTemp <= 10) {
+            // Cold weather
+            imagePath = "/images/cold.jpeg";
+        } else {
+            // Moderate weather
+            imagePath = "/images/moderate.jpg";
+        }
+
+        try {
+            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
+            weatherimage.setImage(image);
+        } catch (NullPointerException e) {
+            System.err.println("Failed to load image: " + imagePath);
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 }
